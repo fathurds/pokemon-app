@@ -1,6 +1,7 @@
 import Layout from "../../components/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export default function PokemonDetail({ pokemonDetail }) {
     const router = useRouter();
@@ -11,12 +12,25 @@ export default function PokemonDetail({ pokemonDetail }) {
     //Memasukan ke localStorage
     let localPokemon = [];
     const catchPokemon = () => {
-        if(localStorage.getItem("dataPokemon")){
-            localPokemon = JSON.parse(localStorage.getItem("dataPokemon"));
+        const randomCatch = Math.random() * 10;
+        if (randomCatch >= 5) {
+            if (localStorage.getItem("dataPokemon")) {
+                localPokemon = JSON.parse(localStorage.getItem("dataPokemon"));
+            }
+            localPokemon.push(pokemonDetail);
+            localStorage.setItem("dataPokemon", JSON.stringify(localPokemon));
+            Swal.fire(
+                'Good job!',
+                'You clicked the button!',
+                'success'
+            )
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Anda tidak Beruntung'
+            })
         }
-        localPokemon.push(pokemonDetail);
-        localStorage.setItem("dataPokemon", JSON.stringify(localPokemon));
-        console.log(localPokemon);
     }
 
     return (
