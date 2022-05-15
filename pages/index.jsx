@@ -1,14 +1,12 @@
 import Layout from "../components/Layout"
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Home({ pokemon }) {
   return (
     <Layout title="Home">
-      <h1 className="text-5xl font-bold text-center py-5 text-slate-700">Fath Pokedex</h1>
       <div className="grid gap-2 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4 xl:grid-cols-5">
         {pokemon.map((el, i) => (
-          <div>
+          <div key={i}>
             {/* Mobile */}
             <Link href={`/pokemon/${i + 1}`}>
               <div className="border bg-slate-200 flex items-center justify-around lg:hidden cursor-pointer ">
@@ -38,6 +36,8 @@ export default function Home({ pokemon }) {
 export async function getStaticProps() {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon');
   const dataPokemon = await res.json();
+  const dataNext = dataPokemon.next;
+  const dataPrevious = dataPokemon.previous;
 
   const pokemon = dataPokemon.results.map((el, i) => {
     const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`;
@@ -49,6 +49,8 @@ export async function getStaticProps() {
 
   return {
     props: {
+      dataNext,
+      dataPrevious,
       pokemon
     }
   }

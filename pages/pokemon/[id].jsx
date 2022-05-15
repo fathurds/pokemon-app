@@ -8,6 +8,17 @@ export default function PokemonDetail({ pokemonDetail }) {
 
     const pokemonName = pokemonDetail.name.charAt(0).toUpperCase() + pokemonDetail.name.slice(1);
 
+    //Memasukan ke localStorage
+    let localPokemon = [];
+    const catchPokemon = () => {
+        if(localStorage.getItem("dataPokemon")){
+            localPokemon = JSON.parse(localStorage.getItem("dataPokemon"));
+        }
+        localPokemon.push(pokemonDetail);
+        localStorage.setItem("dataPokemon", JSON.stringify(localPokemon));
+        console.log(localPokemon);
+    }
+
     return (
         <Layout title={pokemonName}>
             <h1 className="capitalize text-4xl text-center">{pokemonDetail.name}</h1>
@@ -54,11 +65,14 @@ export default function PokemonDetail({ pokemonDetail }) {
 
                 </div>
             </div>
+            <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg text-slate-100" onClick={() => {
+                catchPokemon();
+            }}>Catch</button><br />
             <Link href={`/pokemon/${pokemonDetail.id - 1}`}>
-                <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg" disabled={id == 1 ? true : false} >Previous</button>
+                <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg text-slate-100" disabled={id == 1 ? true : false} >Previous</button>
             </Link>
             <Link href={`/pokemon/${pokemonDetail.id + 1}`}>
-                <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg float-right" disabled={id == 898 ? true : false}>Next</button>
+                <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg float-right text-slate-100" disabled={id == 898 ? true : false}>Next</button>
             </Link>
 
 
