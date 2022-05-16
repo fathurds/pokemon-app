@@ -13,7 +13,7 @@ https://pokeapi.co/api/v2/pokemon/
 ```
 
 # Detail Pokemon
-Pada halaman ini berisi status, tipe, berat dan tinggi pokemon. Pada halaman ini juga bisa menekan tombol next dan previous untuk menuju pada halaman pokemon selanjutnya. Di halaman ini juga ada tombol catch yang fungsinya untuk menangkap pokemon dan memasukannya ke halaman my pokemon
+Pada halaman ini berisi status, tipe, berat dan tinggi pokemon. Pada halaman ini juga bisa menekan tombol next dan previous untuk menuju pada halaman pokemon selanjutnya. Di halaman ini juga ada tombol catch yang fungsinya untuk menangkap pokemon dan memasukannya ke halaman my pokemon. Ada kemungkinan berhasil 50% untuk menangkap pokemon di halaman ini.
 
 # My Pokemon
 Pada halaman ini berisi mengenai pokemon yang kita tangkap. Data di sini didapat dari localStorage
