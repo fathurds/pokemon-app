@@ -11,19 +11,56 @@ export default function PokemonDetail({ pokemonDetail }) {
 
     //Memasukan ke localStorage
     let localPokemon = [];
+    let arr;
+
     const catchPokemon = () => {
         const randomCatch = Math.random() * 10;
         if (randomCatch >= 5) {
-            if (localStorage.getItem("dataPokemon")) {
-                localPokemon = JSON.parse(localStorage.getItem("dataPokemon"));
-            }
-            localPokemon.push(pokemonDetail);
-            localStorage.setItem("dataPokemon", JSON.stringify(localPokemon));
-            Swal.fire(
-                'Good job!',
-                'You clicked the button!',
-                'success'
-            )
+            Swal.fire({
+                title: 'Submit nickname',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                    return fetch(`//api.github.com/users/${login}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Request failed: ${error}`
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (localStorage.getItem("dataPokemon")) {
+                        localPokemon = JSON.parse(localStorage.getItem("dataPokemon"));
+                    }
+                    arr = pokemonDetail;
+
+                    arr["nickname"] = result.value.login;
+
+                    localPokemon.push(arr);
+                    localStorage.setItem("dataPokemon", JSON.stringify(localPokemon));
+
+                    Swal.fire(
+                        'Good job!',
+                        result.value.login + " is your pokemon",
+                        'success'
+                    )
+                } 
+            })
+
+
         } else {
             Swal.fire({
                 icon: 'error',
@@ -79,9 +116,12 @@ export default function PokemonDetail({ pokemonDetail }) {
 
                 </div>
             </div>
-            <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg text-slate-100" onClick={() => {
-                catchPokemon();
-            }}>Catch</button><br />
+            <div className="flex justify-center">
+                <button className="border bg-rose-600 py-2 px-3 mt-3 rounded-lg text-slate-100" onClick={() => {
+                    catchPokemon();
+                }}>Catch</button><br />
+
+            </div>
             <Link href={`/pokemon/${pokemonDetail.id - 1}`}>
                 <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg text-slate-100" disabled={id == 1 ? true : false} >Previous</button>
             </Link>
