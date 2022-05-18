@@ -42,8 +42,8 @@ function List() {
         <Layout title="My Pokemon">
             <div className="grid gap-2 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4 xl:grid-cols-5 mb-5">
                 {data !== null ? data.map((el, i) => (
-                    <div>
-                        <div key={i} className="border bg-slate-200 flex items-center justify-around">
+                    <div key={i}>
+                        <div className="border bg-slate-200 flex items-center justify-around">
                             <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${el.id}.png`} width={112} height={112} className='w-36 lg:justify-self-center' alt={el.name} />
                             <div className='text-center'>
                                 <h4 className='capitalize font-bold text-2xl text-slate-700'>{el.name}</h4>
