@@ -2,6 +2,7 @@ import Layout from "../../components/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import Image from "next/image"
 
 export default function PokemonDetail({ pokemonDetail }) {
     const router = useRouter();
@@ -74,7 +75,8 @@ export default function PokemonDetail({ pokemonDetail }) {
         <Layout title={pokemonName}>
             <h1 className="capitalize text-4xl text-center">{pokemonDetail.name}</h1>
             <div className="flex justify-around">
-                <img src={pokemonDetail.image} alt={pokemonDetail.name} className="w-60" />
+                {/* <img src={pokemonDetail.image} alt={pokemonDetail.name} className="w-60" /> */}
+                <Image src={pokemonDetail.image} alt={pokemonDetail.name} width={240} height={240} />
                 <div className="my-auto px-10">
                     <h4>HP: </h4>
                     <progress id="health" value={pokemonDetail.stats[0].base_stat} max="150"></progress><br />

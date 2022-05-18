@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import Layout from "../components/Layout";
 
@@ -45,7 +46,9 @@ export default function Home({ pokemon }) {
             {/* Mobile */}
             <Link href={`/pokemon/${i + 1 + offset}`}>
               <div className="border bg-slate-200 flex items-center justify-around lg:hidden cursor-pointer ">
-                <img src={el.image} className='w-28 lg:justify-self-center' alt={el.name} />
+                <div className='w-28 lg:justify-self-center'>
+                  <Image src={el.image} width={112} height={112} alt={el.name} />
+                </div>
                 <h4 className='capitalize font-bold text-2xl text-slate-700'>{el.name}</h4>
               </div>
             </Link>
@@ -53,14 +56,16 @@ export default function Home({ pokemon }) {
             {/* Dekstop */}
             <Link href={`/pokemon/${i + 1 + offset}`}>
               <div className="hidden border bg-slate-200 lg:block cursor-pointer hover:scale-150 hover:border-slate-300 transition-all duration-300">
-                <img src={el.image} className='w-28 mx-auto' alt={el.name} />
+                <div className='w-28 mx-auto'>
+                  <Image src={el.image} width={112} height={112} alt={el.name} />
+                </div>
                 <h4 className='capitalize font-bold text-2xl text-slate-700 text-center'>{el.name}</h4>
               </div>
             </Link>
           </div>
         ))}
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end mb-5">
         <button className="border border-sky-400 bg-sky-400 disabled:bg-sky-300 py-2 px-3 mt-3 mx-2 rounded-lg text-slate-100" onClick={() => {
           previousData();
         }} disabled={offset === 0 ? true : false}>Previous</button>

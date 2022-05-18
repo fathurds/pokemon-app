@@ -40,7 +40,7 @@ function List() {
 
     return (
         <Layout title="My Pokemon">
-            <div className="grid gap-2 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid gap-2 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4 xl:grid-cols-5 mb-5">
                 {data !== null ? data.map((el, i) => (
                     <div>
                         <div key={i} className="border bg-slate-200 flex items-center justify-around">
