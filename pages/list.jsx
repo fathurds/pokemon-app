@@ -2,6 +2,7 @@ import Layout from '../components/Layout'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Swal from "sweetalert2";
+import Image from 'next/image';
 
 function List() {
     const [data, setData] = useState([]);
@@ -43,7 +44,7 @@ function List() {
                 {data !== null ? data.map((el, i) => (
                     <div>
                         <div key={i} className="border bg-slate-200 flex items-center justify-around">
-                            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${el.id}.png`} className='w-36 lg:justify-self-center' alt={el.name} />
+                            <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${el.id}.png`} width={112} height={112} className='w-36 lg:justify-self-center' alt={el.name} />
                             <div className='text-center'>
                                 <h4 className='capitalize font-bold text-2xl text-slate-700'>{el.name}</h4>
                                 <h4 className='capitalize font-bold text-2xl text-slate-700'>({el.nickname})</h4>
