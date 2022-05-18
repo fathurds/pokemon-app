@@ -1,5 +1,9 @@
 ## Pokemon App Project
 Project ini ditunjukan untuk tugas di Alterra Academy. Saya membuat project ini menggunakan NextJs dan css framework menggunakan Tailwindcss.
+Link deploy:
+```bash
+https://pokemon-app-inky-tau.vercel.app/
+```
 Ada 3 fitur utama yaitu:
 1. Home
 2. Pokemon
