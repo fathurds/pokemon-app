@@ -2,10 +2,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import Layout from "../components/Layout";
+import { useEffect } from "react";
 
 export default function Home({ pokemon }) {
   const [offset, setOffset] = useState(0);
-  const [newPokemon, setNewPokemon] = useState(pokemon);
+  const [newPokemon, setNewPokemon] = useState([]);
+
+  useEffect(() => {
+    // declare the data fetching function
+    const fetchData = async () => {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`);
+      const dataPokemon = await res.json();
+
+      const pokemon = dataPokemon.results.map((el, i) => {
+        const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`;
+        return {
+          ...el,
+          image
+        }
+      })
+      setNewPokemon(pokemon);
+    }
+
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, [])
+
 
   const nextData = async () => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset + 20}&limit=20`); // (offset + 2) karena jika setOffset diatas line ini tidak akan terbaca karena asyncronous
@@ -66,11 +90,11 @@ export default function Home({ pokemon }) {
         ))}
       </div>
       <div className="flex justify-end mb-5">
-        <button className="border border-sky-400 bg-sky-400 disabled:bg-sky-300 py-2 px-3 mt-3 mx-2 rounded-lg text-slate-100" onClick={() => {
+        <button className="border border-sky-400 bg-sky-400 disabled:bg-sky-300 py-2 px-3 mt-3 mx-2 rounded-lg text-slate-100 hover:opacity-80 transition duration-200" onClick={() => {
           previousData();
         }} disabled={offset === 0 ? true : false}>Previous</button>
 
-        <button className="border border-sky-400 bg-sky-400 disabled:bg-sky-300 py-2 px-3 mt-3 mx-2 rounded-lg text-slate-100" onClick={() => {
+        <button className="border border-sky-400 bg-sky-400 disabled:bg-sky-300 py-2 px-3 mt-3 mx-2 rounded-lg text-slate-100 hover:opacity-80 transition duration-200" onClick={() => {
           nextData();
         }} disabled={offset > 885 ? true : false}>Next</button>
       </div>
@@ -78,21 +102,21 @@ export default function Home({ pokemon }) {
   )
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`);
-  const dataPokemon = await res.json();
+// export async function getServerSideProps() {
+//   const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`);
+//   const dataPokemon = await res.json();
 
-  const pokemon = dataPokemon.results.map((el, i) => {
-    const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`;
-    return {
-      ...el,
-      image
-    }
-  })
+//   const pokemon = dataPokemon.results.map((el, i) => {
+//     const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`;
+//     return {
+//       ...el,
+//       image
+//     }
+//   })
 
-  return {
-    props: {
-      pokemon
-    }
-  }
-}
+//   return {
+//     props: {
+//       pokemon
+//     }
+//   }
+// }

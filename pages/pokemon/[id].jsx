@@ -119,16 +119,16 @@ export default function PokemonDetail({ pokemonDetail }) {
                 </div>
             </div>
             <div className="flex justify-center">
-                <button className="border bg-rose-600 py-2 px-3 mt-3 rounded-lg text-slate-100" onClick={() => {
+                <button className="border bg-rose-600 py-2 px-3 mt-3 rounded-lg text-slate-100 hover:opacity-80 transition duration-200" onClick={() => {
                     catchPokemon();
                 }}>Catch</button><br />
 
             </div>
             <Link href={`/pokemon/${pokemonDetail.id - 1}`}>
-                <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg text-slate-100" disabled={id == 1 ? true : false} >Previous</button>
+                <button className="border py-2 px-3 mt-3 rounded-lg text-slate-100 hover:opacity-80 border-sky-400 bg-sky-400 transition duration-200 disabled:bg-sky-300 disabled:border-sky-300 disabled:hover:bg-sky-300 disabled:hover:opacity-100" disabled={id == 1 ? true : false} >Previous</button>
             </Link>
             <Link href={`/pokemon/${pokemonDetail.id + 1}`}>
-                <button className="border bg-slate-400 py-2 px-3 mt-3 rounded-lg float-right text-slate-100" disabled={id == 898 ? true : false}>Next</button>
+                <button className="border border-sky-400 bg-sky-400 py-2 px-3 mt-3 rounded-lg float-right text-slate-100 hover:opacity-80 transition duration-200 disabled:bg-sky-300 disabled:border-sky-300 disabled:hover:bg-sky-300 disabled:hover:opacity-100" disabled={id == 898 ? true : false}>Next</button>
             </Link>
 
 

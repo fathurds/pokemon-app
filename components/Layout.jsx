@@ -1,7 +1,10 @@
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function Layout({ title, children }) {
+    useEffect(() => {
+        document.body.style.backgroundColor = '#cbd5e1';
+    }, [])
     return (
         <div className="bg-slate-300">
             <Head>
