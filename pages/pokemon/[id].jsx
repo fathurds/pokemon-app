@@ -9,11 +9,7 @@ export default function PokemonDetail({ pokemonDetail }) {
     const { id } = router.query;
 
     const pokemonName = pokemonDetail.name.charAt(0).toUpperCase() + pokemonDetail.name.slice(1);
-
-    //Memasukan ke localStorage
-    let localPokemon = [];
-    let arr;
-
+    
     const catchPokemon = () => {
         const randomCatch = Math.random() * 10;
         if (randomCatch >= 5) {
@@ -26,41 +22,27 @@ export default function PokemonDetail({ pokemonDetail }) {
                 showCancelButton: true,
                 confirmButtonText: 'Submit',
                 showLoaderOnConfirm: true,
-                preConfirm: (login) => {
-                    return fetch(`//api.github.com/users/${login}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText)
-                            }
-                            return response.json()
-                        })
-                        .catch(error => {
-                            Swal.showValidationMessage(
-                                `Request failed: ${error}`
-                            )
-                        })
-                },
                 allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
                 if (result.isConfirmed) {
+                    let localPokemon = [];
                     if (localStorage.getItem("dataPokemon")) {
                         localPokemon = JSON.parse(localStorage.getItem("dataPokemon"));
                     }
-                    arr = pokemonDetail;
+                    const arr = pokemonDetail;
 
-                    arr["nickname"] = result.value.login;
+                    arr["nickname"] = result.value;
 
                     localPokemon.push(arr);
                     localStorage.setItem("dataPokemon", JSON.stringify(localPokemon));
 
                     Swal.fire(
                         'Good job!',
-                        result.value.login + " is your pokemon",
+                        result.value + " is your pokemon",
                         'success'
                     )
                 } 
             })
-
 
         } else {
             Swal.fire({
@@ -96,7 +78,6 @@ export default function PokemonDetail({ pokemonDetail }) {
                     <h4>Speed: </h4>
                     <progress id="health" value={pokemonDetail.stats[5].base_stat} max="150"></progress><br />
 
-
                 </div>
             </div>
             <div className="bg-sky-400 rounded-xl flex justify-center gap-10 w-10/12 mx-auto py-3">
@@ -111,9 +92,7 @@ export default function PokemonDetail({ pokemonDetail }) {
                 <div>
                     <h4 className="text-slate-100 font-semibold text-center">Type</h4>
                     <h4 className="capitalize font-semibold text-slate-700 text-center">
-                        {pokemonDetail.types.map((el, i) => {
-                            return " " + pokemonDetail.types[i].type.name;
-                        })}
+                        {pokemonDetail.types.map((el) => el.type.name).join(", ")}
                     </h4>
 
                 </div>
